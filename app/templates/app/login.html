@@ -1,0 +1,62 @@
+{% extends 'app/base.html' %} 
+
+{% block css %}
+    {% load static%}
+    <link rel=styleSheet href="{% static 'css/login.css' %}" />
+{% endblock %}
+
+{% block title %} Login {% endblock %} 
+
+{% block content %}
+
+<div class="container">
+	<div class="row">
+		<div class=" col-sm-9 col-md-7 col-lg-5 mx-auto">
+			<div class=" login card card-signin my-5">
+				<div class="card-body">
+					<h5 class="card-title text-center">
+						Mantenedor vacunas Covid-19
+					</h5>
+					<form class="form-signin" method="POST">
+						{% csrf_token %}
+						<div class="form-label-group">
+							<input
+								type="text"
+								id="iputUsername"
+								name="username"
+								class="form-control"
+								placeholder="Usuario"
+								required
+								autofocus
+							/>
+							<label for="iputUsername">Usuario</label>
+						</div>
+
+						<div class="form-label-group">
+							<input
+								type="password"
+								id="inputPassword"
+								name="password"
+								class="form-control"
+								placeholder="Contraseña"
+								required
+							/>
+							<label for="inputPassword">Contraseña</label>
+						</div>
+						<div class="text-center">
+							<button
+								class="btn btn-primary btn-block text-uppercase"
+								type="submit"
+							>
+								Ingresar
+							</button>
+						</div>
+					</form>
+				</div>
+				
+				{% include 'app/messages/message.html' %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

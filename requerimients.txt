@@ -1,0 +1,7 @@
+django
+psycopg2
+python-dotenv
+whitenoise
+django-crispy-forms
+django-import-export
+pandas

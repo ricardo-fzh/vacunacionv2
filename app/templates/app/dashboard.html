@@ -1,0 +1,82 @@
+  
+{% extends 'app/base.html' %} {% block css %}
+<link
+	rel="stylesheet"
+	type="text/css"
+	href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css"
+/>
+
+{% endblock %} 
+
+{% block content %}
+<div class="table-responsive">
+    <div class="container mt-5">
+		<div class="card-body">
+                <div class="table-responsive">
+
+				<table
+						class="table table-sm" 
+						id="table"
+						width="100%"
+						cellspacing="0"
+					>
+						<thead>
+							<tr>
+					            <th>#</th>
+        		                <th>Nombre</th>
+        		                <th>Apellido</th>
+        		                <th>Rut</th>
+								<th>dv</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for u in persona_fila %}
+							<form method="post">
+                                {% csrf_token %}
+							<tr>
+								<td> {{ forloop.counter }}</td>
+								<td> {{u.nombre}} </td>
+								<td> {{u.apellido_paterno}}</td>
+								<td> {{u.rut}}</td>
+								<td> {{u.dv}}</td>
+								<td> 
+                                    <input type="text" name="id"  value="{{u.id}}" hidden/>
+									<input type="text" name="rut" value="{{u.rut}}" hidden/>
+									<input type="text" name="dv" value="{{u.dv}}" hidden/>
+                                    <button type="submit" class="btn btn-success btn-registrar">Check</button>
+								</td>
+							</tr>
+							</form>
+							{% endfor %}
+						</tbody>
+					</table>
+                </div>
+
+				</div>
+			</div> 
+    	</table>
+    </div>
+</div>
+{% endblock %} 
+
+
+{% block js %}
+
+{% load static %}
+<script
+	type="text/javascript"
+	charset="utf8"
+	src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"
+></script>
+
+{% comment %} <script src="{% static 'js/dashboard.js' %}"></script> {% endcomment %}
+
+<script>
+
+	setTimeout(() => {
+		location.reload();
+	},30000); 
+</script>
+
+{% endblock %}

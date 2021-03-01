@@ -1,0 +1,130 @@
+{% extends 'app/base.html' %} 
+
+{% block title %} Mantenedor {% endblock %} 
+{% block css %} 
+	{% load static%}
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.css"/>
+{% endblock %}
+
+{% block content %}
+
+<main>
+	<div class="container-fluid">
+		<h2 class="mt-4">Registro de pacientes</h2>
+		<ol class="breadcrumb mb-4">
+			<li class="breadcrumb-item active">Personas</li>
+		</ol>
+
+		<div class="card mb-4">
+			<div class="card-header">
+				{% if request.user.is_staff %}
+				<div class="container">
+					<form method='POST' class="form-row">
+					{% csrf_token %}
+						<div class="form-group col-12">
+							<i class="fas fa-table mr-1"></i>
+							<label class="" for="inlineFormCustomSelectPref">Seleccione instituto </label>
+							<select class="custom-select" name="centros" id="centros" >
+								<option selected="selected" disabled>Seleccione...</option>
+								{% for c in centros_all %}
+								  	<option value="{{c.id}}">{{c}}</option> 
+								{% endfor %}
+							</select>
+						</div>
+						<div class="form-group col-12 text-center">
+							<button type="submit" class="btn btn-success"><i class="fa fa-search"></i> Buscar</button>
+						</div>
+					</form>
+				</div>
+				{% endif %}
+			</div>
+			<div class="card-body">
+                <div class="table-responsive">
+
+				<table
+						class="table table-sm" 
+						id="table"
+						width="100%"
+						cellspacing="0"
+					>
+						<thead>
+							<tr>
+					            <th>#</th>
+        		                <th>Nombre</th>
+        		                <th>Apellido</th>
+        		                <th>Rut</th>
+								<th>dv</th>
+								<th>Fecha nacimiento</th>
+								<th>Email</th>
+								<th>Vacunas disponible</th>
+								<th>Centro</th>
+								<th>Fecha</th>
+								<th>Hora</th>
+								<th>Fecha Regristro primera vacuna</th>
+								<th>Fecha Regristro segunda vacuna</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for u in usuarios %}
+							<tr>
+								<td> {{ forloop.counter }}</td>
+								<td> {{u.nombre}} </td>
+								<td> {{u.apellido_paterno}}</td>
+								<td> {{u.rut}}</td>
+								<td> {{u.dv}}</td>
+								<td> {{u.fecha_nac}}</td>
+								<td> {{u.email}}</td>
+								<td> {{u.vacuna_disponible}}</td>
+								<td> {{u.centros.nombre}}</td>
+								<td> {{u.horas.dia}}</td>
+								<td> {{u.horas.hora}}</td>
+								<td> 
+									{% if u.fecha_primer_registro != None %}
+
+									{{u.fecha_primer_registro}}</td>
+									{% else %}
+									-
+									{% endif %}
+
+								<td> 
+									{% if u.fecha_segundo_registro != None %}
+									{{u.fecha_segundo_registro}}</td>
+									{% else %}
+									 - 
+									 {% endif %}
+								<td>
+									<form method="post">
+										{% csrf_token %}
+										<input type="text" name="id" id="user_id" value="{{u.id}}" hidden/>
+
+										<input type="text" name="del" id="del" value="del" hidden/>
+										<button type="submit" class="btn btn-danger btn-anular">Anular</button>
+									</form>
+								</td>
+								<td> <form method="post">
+                                    {% csrf_token %}
+                                    <input type="text" name="id" id="user_id" value="{{u.id}}" hidden/>
+                                    <button type="submit" class="btn btn-success btn-registrar">Check</button></form>
+                                </td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+                </div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
+{% load static %}
+<script src="{% static 'js/table.js' %}"></script>
+
+{% endblock %}

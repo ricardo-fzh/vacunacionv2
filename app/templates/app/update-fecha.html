@@ -1,0 +1,47 @@
+{% extends 'app/base.html' %} 
+
+{% block title %} ICCP {% endblock %} 
+
+{% block css %} 
+	{% load static%}
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.css"/>
+{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+<main>
+	<div class="container">
+		<h2 class="mt-4">Administración {{centros.nombre | upper}}</h2>
+		<ol class="breadcrumb mb-4">
+			<li class="breadcrumb-item active">Edición de Agenda</li>
+		</ol>
+
+		<div class="card mb-4">
+			<div class="card-header">
+				<i class="fas fa-table mr-1"></i>
+			</div>
+			<div class="card-body">
+			<form method='POST'>
+				{% csrf_token %}	
+				{{form | crispy }}
+				<div class="text-center">
+					<a href="{% url 'mantenedor-fechas' %}" class="btn btn-secondary">Volver</a>
+
+					<button type="submit" class="btn btn-success">Actualizar</button>
+				</div>
+			</form>
+			</div>
+		</div>
+	</div>
+</main>
+
+
+{% endblock %} 
+
+	{% block js %}
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
+		{% load static %}
+		<script src="{% static 'js/table.js' %}"></script>
+	{% endblock %}

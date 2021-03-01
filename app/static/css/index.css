@@ -1,0 +1,94 @@
+body {
+	background: #007bff;
+	background: linear-gradient(to right, #0062e6, #33aeff);
+}
+
+/* .container {
+	margin-top: 80px;
+} */
+
+
+.pricing .card {
+	border: none;
+	border-radius: 1rem;
+	transition: all 0.2s;
+	box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+}
+
+.pricing hr {
+	margin: 1.5rem 0;
+}
+
+.pricing .card-title {
+	margin: 0.5rem 0;
+	font-size: 0.9rem;
+	letter-spacing: 0.1rem;
+	font-weight: bold;
+}
+
+.pricing .card-price {
+	font-size: 20px !important;
+	margin-bottom: 16px !important;
+}
+
+.pricing .card-price .period {
+	font-size: 0.8rem;
+}
+
+.pricing ul li {
+	margin-bottom: 1rem;
+}
+
+.pricing .text-muted {
+	opacity: 0.7;
+}
+
+.pricing .btn {
+	font-size: 80%;
+	border-radius: 5rem;
+	letter-spacing: 0.1rem;
+	font-weight: bold;
+	padding: 1rem;
+	opacity: 0.7;
+	transition: all 0.2s;
+}
+
+/* Hover Effects on Card */
+
+ @media (min-width: 992px) { */
+	 .pricing .card:hover {
+		margin-top: -0.25rem;
+		margin-bottom: 0.25rem;
+		box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+	}
+	.pricing .card:hover .btn {
+		opacity: 1;
+	} 
+} 
+.centros-title{
+	margin-bottom: 50px !important; 
+}
+
+h6{
+	font-size: 10px !important;
+	margin-bottom: 20px !important;
+}
+
+.salto{
+    display: inline-block;
+    margin-bottom: 26px;
+}
+
+.cell{
+	display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+	margin-top: 8px;
+	/* margin-left: 45px; */
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+
+}
+

@@ -1,0 +1,59 @@
+{% extends 'app/base.html' %} 
+
+{% block title %} mantenedor_fechas {% endblock %} 
+
+{% block css %} 
+{% endblock %} 
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+<main>
+	<div class="container">
+		<h2 class="mt-4">Administración {{centros.nombre | upper}}</h2>
+		<ol class="breadcrumb mb-4">
+			<li class="breadcrumb-item active">Agregar Fecha</li>
+		</ol>
+
+		<div class="card mb-4">
+			<div class="card-header">
+				<i class="fas fa-table mr-1"></i>
+			</div>
+			<div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="form-group text-center">
+  					  <label for="exampleFormControlFile1">Cree fechas desde un archivo .csv</label>
+						<div class="text-center">
+							<div class="custom-file">
+    							<input type="file" name="myfile" class="custom-file-input" id="validatedCustomFile" accept=".csv" required>
+    							<label class="custom-file-label" for="validatedCustomFile">Seleccione archivo .csv</label>
+  							</div>
+						</div>
+					  </div>
+					<div class="text-center">
+						<a href="{% url 'mantenedor-fechas' %}" class="btn btn-secondary">Volver</a>
+						<button type="submit" class="btn btn-success">Agregar fecha </button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</main>
+
+
+{% endblock %}
+
+{% block js %}
+ 	<script>
+		$('.custom-file input').change(function() {
+		    const $el = $(this),
+		    files = $el[0].files,
+		    label = files[0].name;
+		    if (files.length > 1) {
+		        label = label + " and " + String(files.length - 1) + " more files"
+		    }
+		    $el.next('.custom-file-label').html(label);
+		});
+	</script>
+{% endblock  %}

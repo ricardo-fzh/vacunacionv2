@@ -1,0 +1,125 @@
+{% extends 'app/base.html' %} 
+
+{% block css %} 
+    {% load static %}
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="{% static 'css/index.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/reserva.css'%}" />
+{% endblock %}
+
+{% block content %}
+<section class="pricing py-5">
+	<div class="container">
+
+		<div class="row">
+			<!-- Free Tier -->
+			<div class="col-12 mt-5">
+				<div class="card mb-5 mb-lg-0">
+					<div class="card-body">
+                        {% load crispy_forms_tags %}
+						<h6 class="card-price text-center">
+							{{centro.nombre | upper}}
+						</h6>
+						<hr />
+                        <form method="POST" class="reserva">
+                            {% csrf_token %}
+                            <div class="form-row">
+								<div class="form-group col-6 mb-5">
+									<label class="" for="inlineFormCustomSelectPref">Fecha de vacunación </label>
+									<select class="custom-select" name="dias" id="dias" required>
+										<option selected="selected" disabled>Seleccione...</option>
+										{% for d in dias %}
+											<option value="{{d.dia}}">{{d.dia}}</option> 
+										{% endfor %}
+									</select>
+								</div>
+								<div class="form-group col-6 mb-5">
+									<label class="" for="inlineFormCustomSelectPref">Hora de vacunación </label>
+									<select class="custom-select" name="horas" id="horas" disabled required>
+										<option selected="selected" disabled>Seleccione...</option>
+										{% for h in horas %}
+										  	<option value="{{h.id}}"  data-dias="{{ h.dia }}">{{h}}</option> 
+										{% endfor %}
+									</select>
+								</div>
+								<div class="form-group col-sm-12 col-md-3">
+								 {{form.nombre|as_crispy_field}}
+								</div>
+								<div class="form-group col-sm-12 col-md-3">
+									{{form.apellido_paterno|as_crispy_field}}
+								</div>
+								<div class="form-group  col-sm-12 col-md-3">
+									{{form.apellido_materno|as_crispy_field}}
+								</div>
+								<div class="form-group  col-sm-12 col-md-3">
+									{{form.genero|as_crispy_field}}
+								</div>
+								<div class="form-group col-sm-12 col-md-6">
+									{{form.email|as_crispy_field}} 
+								</div>
+								<div class="form-group col-8 col-sm-8  col-md-4">
+									{{form.rut|as_crispy_field}} 
+								</div>
+								<div class="form-group groupb">
+									<div class="salto"></div>
+      								<span class="guion">-</span>
+								</div>
+								<div class="form-group col-2 col-sm-2 col-md-1">
+									<div class="salto"></div>
+									{{form.dv|as_crispy_field}}
+								</div>
+								<div class="form-group col-sm-12 col-md-6	">
+									{{form.fecha_nac|as_crispy_field}}
+								</div>
+								<div class="form-group col-4 col-md-1 text-center">
+									<div class="salto"></div>
+      								<input type="text" class="form-control" placeholder="+569" disabled>
+								</div>
+								<div class="form-group col-8 col-md-5">
+									{{form.celular|as_crispy_field}}
+								</div>
+								<div class="form-group col-md-4 ">
+									{{form.direccion|as_crispy_field}}
+								</div>	
+								<div class="form-group col-md-4 ">
+									{{form.block|as_crispy_field}}
+								</div>	
+								<div class="form-group col-md-4">
+									{{form.departamento|as_crispy_field}}
+								</div>	
+								<button type="submit" class="btn btn-block btn-primary text-uppercase">Tomar hora </button>
+							  </div>
+                        </form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
+ 
+{% block js %}
+	{% load static %}
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+	<script src="{% static 'js/table.js' %}"></script>
+	<script src="{% static 'js/validation.js' %}"></script>
+	<script>
+
+		$("#dias").change(function() {
+    		$("#horas").prop('disabled', !Boolean($("#dias").val()));
+    		$("#horas").find('option[data-dias]').hide();
+    		$("#horas").find('option[data-dias="' + $("#dias").val() + '"]').show();
+		});
+
+	</script>
+	<script>
+	    var onLoaded = function() {
+	       // I am assuming your field has id of where_load, it might be different
+	        var location_input = document.getElementById('id_direccion');
+	        var autocomplete = new google.maps.places.Autocomplete(location_input);
+
+	    }
+	</script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnryVsacm2EyevPmZYuiI6yMwIv5anUOY&libraries=places&callback=onLoaded" async defer></script>
+
+{% endblock %}	

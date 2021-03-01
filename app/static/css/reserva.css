@@ -1,0 +1,27 @@
+
+body{
+    background: #007bff;
+    background: linear-gradient(to right, #0062e6, #33aeff);
+}
+
+
+.hora{
+    font-weight: bold !important;
+}
+
+
+.card-info{
+    width: 600px !important;
+}
+
+.guion {
+    width: 2px;
+}
+
+.groupb{
+    padding:  0 !important;
+    height: 0px !important;
+    width: 0px !important;
+    margin: 0 !important;
+    margin-right: 6px !important;
+}
