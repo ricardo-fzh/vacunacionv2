@@ -2,6 +2,7 @@ from django import forms
 from .models import Hora, Persona, Centro
 from .helper import digito_verificador
 from django.core.exceptions import ValidationError
+from datetime import date
 
 class HorasForm(forms.ModelForm):
     class Meta:
@@ -24,7 +25,7 @@ class PersonaForm(forms.ModelForm):
     class  Meta:
         model =  Persona
         fields = '__all__'
-        exclude = [ 'centros','horas',  'inoculacion', 'asistencias']
+        exclude = [ 'centros','horas',  'inoculacion', 'asistencias', ]
         widgets = {
         'email' : forms.TextInput(attrs={'placeholder': 'ejemplo@ejemplo.cl'}),
         'fecha_nac': forms.TextInput(attrs={'type': 'date'}),
@@ -60,6 +61,17 @@ class PersonaForm(forms.ModelForm):
     def clean_apellido_paterno(self):
         apellido_paterno = " ".join(self.cleaned_data.get('apellido_paterno').split())
         return apellido_paterno.title()
+
+    def clean_edad(self):
+        today = date.today()
+        time_diference = today - self.cleaned_data.get('fecha_nac')
+        fecha = self.cleaned_data.get('fecha_nac')
+        fecha_dicc = str(fecha).split('-')
+        año = int(fecha_dicc[0])
+        mes = int(fecha_dicc[1])
+        dia = int(fecha_dicc[2])
+                
+        return today.year - año - ((today.month, today.day) < (mes, dia))
 
     def clean_celular(self):
         celular = f"+569{self.cleaned_data.get('celular')}"

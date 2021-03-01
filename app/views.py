@@ -72,7 +72,7 @@ def reserva(request, pk):
 
     for d in dias:
         if d.dia > hoy: 
-            if d.cupos.id == 2:
+            if d.cupos.id == 1:
                 distinct_today.append(d)  
             
     data = {
@@ -124,7 +124,7 @@ def reserva(request, pk):
                     today = date.today()
                     form.centros = centro
                     form.save(data)
-                    hora.cupos = Cupo.objects.get(id=1)
+                    hora.cupos = Cupo.objects.get(id=2)
                     hora.save()
                     persona = Persona.objects.get(rut=rut)
                     persona.centros = centro
@@ -153,7 +153,7 @@ def reserva(request, pk):
                             else:
                                 form = PersonaForm(data=request.POST, instance=persona)
                                 form.centros = centro
-                                hora.cupos = Cupo.objects.get(id=1)
+                                hora.cupos = Cupo.objects.get(id=2)
                                 hora.save()
                                 persona.centros = centro
                                 persona.fecha_vacunacion = hora.dia
@@ -560,6 +560,8 @@ def mantenedor_persona(request):
         return redirect(to='login')
 
 def dashboard(request):
+    if not request.user.is_authenticated:
+        return redirect(to='login')
     persona_fila = PersonaFila.objects.all()
     data = {
         'persona_fila': persona_fila
